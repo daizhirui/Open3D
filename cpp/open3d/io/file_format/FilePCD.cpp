@@ -5,7 +5,9 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include <liblzf/lzf.h>
+extern "C" {
+#include <lzf.h>
+}
 
 #include <cstdint>
 #include <cstdio>

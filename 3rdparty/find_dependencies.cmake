@@ -224,6 +224,9 @@ function(open3d_pkg_config_3rdparty_library name)
                 target_compile_definitions(${name} INTERFACE ${CMAKE_MATCH_1})
             endif()
         endforeach()
+        if (pc_${name}_LDFLAGS)
+            target_link_options(${name} INTERFACE ${pc_${name}_LDFLAGS})
+        endif()
         if(NOT BUILD_SHARED_LIBS OR arg_PUBLIC)
             install(TARGETS ${name} EXPORT ${PROJECT_NAME}Targets)
         endif()
@@ -767,9 +770,8 @@ endif()
 
 # jsoncpp
 if(USE_SYSTEM_JSONCPP)
-    open3d_find_package_3rdparty_library(3rdparty_jsoncpp
-        PACKAGE jsoncpp
-        TARGETS jsoncpp_lib
+    open3d_pkg_config_3rdparty_library(3rdparty_jsoncpp
+        SEARCH_ARGS jsoncpp
     )
     if(NOT 3rdparty_jsoncpp_FOUND)
         set(USE_SYSTEM_JSONCPP OFF)
@@ -790,9 +792,8 @@ endif()
 
 # liblzf
 if(USE_SYSTEM_LIBLZF)
-    open3d_find_package_3rdparty_library(3rdparty_liblzf
-        PACKAGE liblzf
-        TARGETS liblzf::liblzf
+    open3d_pkg_config_3rdparty_library(3rdparty_liblzf
+        SEARCH_ARGS liblzf
     )
     if(NOT 3rdparty_liblzf_FOUND)
         set(USE_SYSTEM_LIBLZF OFF)
